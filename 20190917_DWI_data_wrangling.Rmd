@@ -4,8 +4,18 @@ author: "miao"
 date: "9/17/2019"
 output: html_document
 ---
-```{r}
+```{r library, include = FALSE}
 library(tidyverse)
 ```
 
+## load in a dataset
+```{r}
+###reads in a dataset
+litters_data <- read_csv(file = 'FAS_litters.csv')
+litters_data <-  janitor:: clean_names(litters_data)
+
+pups_data <- read_csv("FAS_pups.csv")
+pups_data <- janitor::clean_names(pups_data)
+
+```
 
