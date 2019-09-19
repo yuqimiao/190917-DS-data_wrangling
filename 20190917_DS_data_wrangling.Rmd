@@ -26,7 +26,7 @@ skimr::skim(pups_data)
 
 ## specify the col_class
 ```{r specify the col_class}
-pups_data = read_csv("./data/FAS_pups.csv", col_types = "ciiiii")
+pups_data = read_csv("FAS_pups.csv", col_types = "ciiiii")
 skimr::skim(pups_data)
 ```
 
@@ -45,4 +45,70 @@ pulse_data
 ```
 
 ## "_" not "."
+
+## Selecting
+
+```{r}
+select(litters_data, group, litter_number)
+
+select(litters_data, litter_number, gd0_weight, starts_with("pups"))
+## end_with(), contains()
+
+select(litters_data, litter_number, group, everything()) 
+## reorder the column
+
+select(litters_data, -group)
+## remove the var not needed.
+
+select(litters_data, GROUP = group, LiTtEr_NuMbEr = litter_number)
+## or
+rename(litters_data, Group = group)
+
+```
+
+
+## filtering
+
+```{r}
+pups_data <- read_csv("FAS_pups.csv")
+pups_data <- janitor::clean_names(pups_data)
+
+filter(litters_data, group == "Con7")
+
+filter(litters_data, group %in% c("Con7","Con8"))
+
+filter(litters_data, gd_of_birth == 20)
+filter(litters_data, gd_of_birth <= 20)
+
+filter(litters_data, !is.na(gd0_weight)) ## don't change the orginial
+# <=>
+drop_na(litters_data,gd0_weight) ## don't change the orginial
+
+filter(pups_data, sex == 1)
+
+filter(pups_data, sex == 2 & pd_walk < 11)
+## %in%, is.na()
+```
+
+
+## mutate
+
+```{r}
+mutate(litters_data,
+  wt_gain = gd18_weight - gd0_weight,
+  group = str_to_lower(group)
+)
+
+```
+
+
+## arrange
+```{r}
+arrange(litters_data, pups_born_alive)
+arrange(litters_data, desc(pups_born_alive))
+
+arrange(litters_data, pups_born_alive, gd0_weight)
+
+## arrange two var in order.
+```
 
