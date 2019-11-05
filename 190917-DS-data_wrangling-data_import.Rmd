@@ -1,0 +1,50 @@
+---
+title: "190917-DS-Data_wrangling-Data_import"
+author: "Yuqi Miao"
+date: "11/5/2019"
+output: html_document
+---
+## tidyverse!
+```{r tidyverse}
+library(tidyverse)
+```
+
+## load in a dataset
+```{r}
+###reads in a dataset
+litters_data <- read_csv(file = 'FAS_litters.csv')
+litters_data <-  janitor:: clean_names(litters_data)
+
+pups_data <- read_csv("FAS_pups.csv")
+pups_data <- janitor::clean_names(pups_data)
+?janitor::clean_names(pups_dat)
+
+
+
+head(pups_data)
+tail(pups_data)
+skimr::skim(pups_data)
+
+```
+
+## specify the col_class
+```{r specify the col_class}
+pups_data = read_csv("FAS_pups.csv", col_types = "ciiiii")
+skimr::skim(pups_data)
+```
+
+## readxl and haven
+
+```{r}
+library(readxl)
+mlb11_data <- read_excel('mlb11.xlsx',range = "A1:D7")
+mlb11_data
+```
+
+```{r read in sas}
+library(haven)
+pulse_data <- read_sas("public_pulse_data.sas7bdat")
+pulse_data
+```
+
+## "_" not "."

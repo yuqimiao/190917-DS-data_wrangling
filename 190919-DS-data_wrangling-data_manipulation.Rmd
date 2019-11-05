@@ -1,50 +1,11 @@
 ---
-title: "data_wragling1"
+title: "data_wragling 1"
 author: "miao"
 date: "9/17/2019"
 output: html_document
 ---
 
-## tidyverse!
-```{r tidyverse}
-library(tidyverse)
-```
 
-## load in a dataset
-```{r}
-###reads in a dataset
-litters_data <- read_csv(file = 'FAS_litters.csv')
-litters_data <-  janitor:: clean_names(litters_data)
-
-pups_data <- read_csv("FAS_pups.csv")
-pups_data <- janitor::clean_names(pups_data)
-head(pups_data)
-tail(pups_data)
-skimr::skim(pups_data)
-
-```
-
-## specify the col_class
-```{r specify the col_class}
-pups_data = read_csv("FAS_pups.csv", col_types = "ciiiii")
-skimr::skim(pups_data)
-```
-
-## readxl and haven
-
-```{r}
-library(readxl)
-mlb11_data <- read_excel('mlb11.xlsx',range = "A1:D7")
-mlb11_data
-```
-
-```{r read in sas}
-library(haven)
-pulse_data <- read_sas("public_pulse_data.sas7bdat")
-pulse_data
-```
-
-## "_" not "."
 
 ## Selecting
 
@@ -110,5 +71,21 @@ arrange(litters_data, desc(pups_born_alive))
 arrange(litters_data, pups_born_alive, gd0_weight)
 
 ## arrange two var in order.
+```
+
+## create a collection of commands.
+
+## %>%
+```{r}
+litters_data <- read_csv('FAS_litters.csv') %>% 
+    janitor::clean_names() %>%
+    select(-pups_survive) %>% 
+    mutate(
+        wt_gain = gd18_weight - gd0_weight,
+        group = str_to_lower(group)) %>%
+    drop_na(gd0_weight) 
+litters_data %>% pull(gd0_weight) %>% mean()
+    
+    
 ```
 
