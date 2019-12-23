@@ -2,20 +2,50 @@
 title: "190917-DS-Data_wrangling-Data_import"
 author: "Yuqi Miao"
 date: "11/5/2019"
-output: html_document
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    
 ---
-## tidyverse!
+# tidyverse!
 ```{r tidyverse}
 library(tidyverse)
 ```
 
+# path: here
+
+```{r}
+library(here)
+here()
+here("one", "two", "123455.txt") 
+cat(readLines(here("one", "two", "123455.txt")))
+
+## directly create two levels of new directory under current and create the files, and let the path go to this direction.
+
+
+
+
+```
+
+## use paste to operate long path name
+
+```{r}
+paste(c(1,2,3))
+paste(1,2,3,sep = ",") 
+paste(c(1,2,3),collapse = ",") ## 注意区分，要连接vector内的字符，需要设置collapse
+
+list.files("~")
+```
+
+
 ## load in a dataset
 ```{r}
 ###reads in a dataset
-litters_data <- read_csv(file = 'FAS_litters.csv')
+litters_data <- read_csv(file = 'data/FAS_litters.csv')
 litters_data <-  janitor:: clean_names(litters_data)
 
-pups_data <- read_csv("FAS_pups.csv")
+pups_data <- read_csv("data/FAS_pups.csv")
 pups_data <- janitor::clean_names(pups_data)
 ?janitor::clean_names(pups_dat)
 
@@ -29,7 +59,7 @@ skimr::skim(pups_data)
 
 ## specify the col_class
 ```{r specify the col_class}
-pups_data = read_csv("FAS_pups.csv", col_types = "ciiiii")
+pups_data = read_csv("data/FAS_pups.csv", col_types = "ciiiii")
 skimr::skim(pups_data)
 ```
 
@@ -37,14 +67,18 @@ skimr::skim(pups_data)
 
 ```{r}
 library(readxl)
-mlb11_data <- read_excel('mlb11.xlsx',range = "A1:D7")
+mlb11_data <- read_excel('data/mlb11.xlsx',range = "A1:D7")
 mlb11_data
 ```
 
 ```{r read in sas}
 library(haven)
-pulse_data <- read_sas("public_pulse_data.sas7bdat")
+pulse_data <- read_sas("data/public_pulse_data.sas7bdat")
 pulse_data
 ```
 
 ## "_" not "."
+
+
+
+
